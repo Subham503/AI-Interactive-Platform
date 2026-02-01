@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Backend Test</title>
+</head>
+<body>
+  <h1>Backend Test 🚀</h1>
+  <button id="checkBtn">Check /predict</button>
+  <p id="result"></p>
+
+  <script>
+    document.getElementById("checkBtn").addEventListener("click", async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/predict");
+        const data = await response.json();
+        document.getElementById("result").innerText = JSON.stringify(data);
+      } catch (err) {
+        document.getElementById("result").innerText = "Backend not reachable ❌";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

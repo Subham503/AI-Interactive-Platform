@@ -1,9 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Interactive Platform</title>
+    <meta charset="UTF-8">
+    <title>AI Interactive Platform 🚀</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(120deg, #667eea, #764ba2);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 420px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        #response {
+            margin-top: 20px;
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Project Started 🚀</h1>
+
+<div class="card">
+    <h1>AI Study Planner 🚀</h1>
+
+    <input type="text" id="subject" placeholder="📘 Subject">
+    <input type="text" id="weak_areas" placeholder="⚠️ Weak Areas">
+    <input type="number" id="hours" placeholder="⏱ Available Hours">
+
+    <button onclick="generatePlan()">Generate Study Plan</button>
+
+    <div id="response">Your AI plan will appear here...</div>
+</div>
+
+<script>
+async function generatePlan() {
+    const subject = document.getElementById("subject").value;
+    const weak_areas = document.getElementById("weak_areas").value;
+    const hours = document.getElementById("hours").value;
+
+    document.getElementById("response").innerText = "🤖 Thinking...";
+
+    try {
+        const res = await fetch("http://127.0.0.1:5000/generate_plan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ subject, weak_areas, hours })
+        });
+
+        const data = await res.json();
+        document.getElementById("response").innerText = data.plan;
+    } catch {
+        document.getElementById("response").innerText = "❌ Backend not responding";
+    }
+}
+</script>
+
 </body>
 </html>
